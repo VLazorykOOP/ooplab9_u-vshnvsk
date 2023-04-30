@@ -5,34 +5,34 @@
 Вказівка. Наявні в класі list функція-член remove у даному випадку використовувати не можна, 
 тому що вона видаляє всі елементи із певним значенням.*/
 #include <iostream>
-#include <algorithm>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
-int main()
+int main() 
 {
-    list<int> L = {0, 3, 6, 7, 0, 3, 1, 10, 0};
+    list<int> L = {0, 1, 2, 3, 0, 4, 5, 0};
 
-    auto firstZero = find(L.begin(), L.end(), 0);
-    auto lastZero = find(L.rbegin(), L.rend(), 0);
-
-    if(firstZero != L.end())
-    {
-        if(lastZero.base() != firstZero)
-        {
-            L.erase(firstZero);
-            L.erase(prev(lastZero.base()));
-        } 
-        else 
-        {
-            L.erase(firstZero);
-        }
+    auto first_zero = find(L.begin(), L.end(), 0);
+    if (first_zero != L.end()) {
+        L.erase(first_zero);
     }
 
-    for(auto &elem : L)
-    {
-        cout << elem << ' ';
+    auto last_zero = find(L.rbegin(), L.rend(), 0);
+    if (last_zero != L.rend()) {
+        L.erase(next(last_zero).base());
     }
+
+    auto only_zero = find(L.begin(), L.end(), 0);
+    if (only_zero != L.end() && next(only_zero) == L.end()) {
+        L.erase(only_zero);
+    }
+
+    for (int x : L) {
+        cout << x << " ";
+    }
+    cout << endl;
+
     return 0;
 }
